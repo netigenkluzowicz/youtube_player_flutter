@@ -296,8 +296,9 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
         children: [
           Transform.scale(
             scale: controller.value.isFullScreen
-                ? (1 / _aspectRatio * MediaQuery.of(context).size.width) /
-                    MediaQuery.of(context).size.height
+                //? (1 / _aspectRatio * MediaQuery.of(context).size.width) /
+                //    MediaQuery.of(context).size.height
+                ? 1
                 : 1,
             child: RawYoutubePlayer(
               key: widget.key,
@@ -318,7 +319,7 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
               duration: const Duration(milliseconds: 300),
               child: widget.thumbnail ?? _thumbnail,
             ),
-          if (!controller.value.isFullScreen &&
+          if (false&&!controller.value.isFullScreen &&
               !controller.flags.hideControls &&
               controller.value.position > const Duration(milliseconds: 100) &&
               !controller.value.isControlsVisible &&
@@ -398,11 +399,18 @@ class _YoutubePlayerState extends State<YoutubePlayer> {
                 ),
               ),
             ),
-          ],
-          if (!controller.flags.hideControls)
-            Center(
-              child: PlayPauseButton(),
+            AnimatedOpacity(
+              opacity: controller.value.isControlsVisible
+                  ? 1
+                  : 0,
+              duration: const Duration(milliseconds: 300),
+              child: Center(
+                child: PlayPauseButton(),
+              ),
             ),
+          ],
+          //if (!controller.flags.hideControls) old line
+          //if (controller.value.isControlsVisible)
           if (controller.value.hasError) errorWidget,
         ],
       ),

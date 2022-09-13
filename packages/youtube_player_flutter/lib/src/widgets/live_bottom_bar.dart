@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../utils/youtube_player_controller.dart';
 import 'duration_widgets.dart';
 import 'full_screen_button.dart';
+import '../widgets/widgets.dart';
 
 /// A widget to display bottom controls bar on Live Video Mode.
 class LiveBottomBar extends StatefulWidget {
@@ -49,26 +50,29 @@ class _LiveBottomBarState extends State<LiveBottomBar> {
     } else {
       _controller = controller;
     }
-    _controller.addListener(listener);
+    //_controller.addListener(listener);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(listener);
+    //_controller.removeListener(listener);
     super.dispose();
   }
 
-  void listener() {
-    if (mounted) {
-      setState(() {
-        _currentSliderPosition =
-            _controller.metadata.duration.inMilliseconds == 0
-                ? 0
-                : _controller.value.position.inMilliseconds /
-                    _controller.metadata.duration.inMilliseconds;
-      });
-    }
-  }
+  //void listener() {
+  //  if (mounted) {
+  //    setState(() {
+  //      _currentSliderPosition =
+  //          _controller.metadata.duration.inMilliseconds == 0
+  //              ? 0
+  //              : _controller.value.position.inMilliseconds /
+  //                  _controller.metadata.duration.inMilliseconds>1.0?1.0:_controller.value.position.inMilliseconds /
+  //              _controller.metadata.duration.inMilliseconds;
+//
+  //      //print("_currentSliderPosition: $_currentSliderPosition");
+  //    });
+  //  }
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -76,46 +80,58 @@ class _LiveBottomBarState extends State<LiveBottomBar> {
       visible: _controller.value.isControlsVisible,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          const SizedBox(
-            width: 14.0,
-          ),
-          CurrentPosition(),
-          Expanded(
-            child: Padding(
-              child: Slider(
-                value: _currentSliderPosition,
-                onChanged: (value) {
-                  _controller.seekTo(
-                    Duration(
-                      milliseconds:
-                          (_controller.metadata.duration.inMilliseconds * value)
-                              .round(),
-                    ),
-                  );
-                },
-                activeColor: widget.liveUIColor,
-                inactiveColor: Colors.transparent,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
+          //const SizedBox(
+          //  width: 14.0,
+          //),
+          //CurrentPosition(),
+          //Expanded(
+          //  child: Padding(
+          //    child: Slider(
+          //      value: _currentSliderPosition,
+          //      onChanged: (value) {
+          //        _controller.seekTo(
+          //          Duration(
+          //            milliseconds:
+          //                (_controller.metadata.duration.inMilliseconds * value)
+          //                    .round(),
+          //          ),
+          //        );
+          //      },
+          //      activeColor: widget.liveUIColor,
+          //      inactiveColor: Colors.transparent,
+          //    ),
+          //    padding: const EdgeInsets.symmetric(
+          //      horizontal: 8.0,
+          //    ),
+          //  ),
+          //),
+          //InkWell(
+          //  onTap: () => _controller.seekTo(_controller.metadata.duration),
+          //  child: Material(
+          //    color: widget.liveUIColor,
+          //    child: const Text(
+          //      ' LIVE ',
+          //      style: TextStyle(
+          //        color: Colors.white,
+          //        fontSize: 12.0,
+          //        fontWeight: FontWeight.w300,
+          //      ),
+          //    ),
+          //  ),
+          //),
+      Material(
+          color: widget.liveUIColor,
+          child: const Text(
+            ' LIVE ',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w300,
             ),
           ),
-          InkWell(
-            onTap: () => _controller.seekTo(_controller.metadata.duration),
-            child: Material(
-              color: widget.liveUIColor,
-              child: const Text(
-                ' LIVE ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-          ),
+        ),
           widget.showLiveFullscreenButton
               ? FullScreenButton(controller: _controller)
               : const SizedBox(width: 14.0),

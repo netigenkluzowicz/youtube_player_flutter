@@ -70,6 +70,7 @@ class _TouchShutterState extends State<TouchShutter> {
   }
 
   void _toggleControls() {
+    //print("_toggleControls() to ${!_controller.value.isControlsVisible}");
     _controller.updateValue(
       _controller.value.copyWith(
         isControlsVisible: !_controller.value.isControlsVisible,

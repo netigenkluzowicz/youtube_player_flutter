@@ -76,9 +76,11 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
         _playerState == PlayerState.playing ||
         _playerState == PlayerState.paused) {
       return Visibility(
-        visible: _playerState == PlayerState.cued ||
-            !_controller.value.isPlaying ||
-            _controller.value.isControlsVisible,
+        //visible: _playerState == PlayerState.cued ||
+        //    !_controller.value.isPlaying ||
+        //    _controller.value.isControlsVisible,
+        //visible: _controller.value.isControlsVisible,
+        visible: true,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
