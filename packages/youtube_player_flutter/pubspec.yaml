@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_inappwebview: ^6.0.0
+  webview_flutter_android: 3.16.1 # fix for Unknown feature SUPPRESS_ERROR_PAGE
 
 dev_dependencies:
   flutter_test:
